@@ -54,23 +54,19 @@ export default function ArchivePage() {
             </motion.p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 md:gap-8 text-xs font-bold tracking-[0.2em] uppercase text-gray-500 relative z-10">
+          <div className="flex flex-wrap items-center gap-3 relative z-10">
             {FILTERS.map((filter) => (
               <button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
                 className={cn(
-                  "transition-all duration-300 relative",
-                  activeFilter === filter ? "text-atelier-black" : "hover:text-atelier-black"
+                  "px-5 py-2 rounded-full text-[10px] font-sans-tech font-bold tracking-widest uppercase transition-all duration-300 border",
+                  activeFilter === filter 
+                    ? "bg-atelier-black text-atelier-bg border-atelier-black" 
+                    : "bg-transparent text-gray-500 border-gray-300 hover:border-atelier-black hover:text-atelier-black"
                 )}
               >
                 {filter}
-                {activeFilter === filter && (
-                  <motion.div 
-                    layoutId="activeFilter"
-                    className="absolute -bottom-1 left-0 right-0 h-px bg-atelier-black"
-                  />
-                )}
               </button>
             ))}
           </div>
@@ -99,7 +95,7 @@ export default function ArchivePage() {
         {/* Grid */}
         <motion.div 
           layout
-          className="p-8 md:p-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 min-h-[50vh]"
+          className="p-8 md:p-16 columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8 min-h-[50vh]"
         >
           <AnimatePresence mode="popLayout">
             {filteredItems.map((item) => (
@@ -110,9 +106,9 @@ export default function ArchivePage() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.4 }}
-                className="group cursor-pointer"
+                className="group cursor-pointer break-inside-avoid relative mb-8"
               >
-                <div className="relative aspect-3/4 w-full mb-6 overflow-hidden bg-gray-100">
+                <div className="relative aspect-[3/4] w-full overflow-hidden bg-gray-100 rounded-sm">
                   <Image 
                     src={item.image}  
                     alt={item.name}
@@ -121,20 +117,14 @@ export default function ArchivePage() {
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
                   
-                  {/* Overlay Tag */}
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-white/90 backdrop-blur-sm px-3 py-1 text-[10px] font-bold tracking-widest uppercase border border-gray-100">
-                      {item.type}
-                    </span>
+                  {/* Metadata Overlay */}
+                  <div className="absolute bottom-0 inset-x-0 p-6 bg-white/30 backdrop-blur-md border-t border-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out flex justify-between items-end">
+                     <div>
+                        <h3 className="font-serif text-2xl text-atelier-black mb-1">{item.name}</h3>
+                        <p className="font-sans-tech text-[10px] text-atelier-black/70">{item.series} • {item.year}</p>
+                     </div>
+                     <span className="font-mono text-xs text-atelier-black/50">{item.id}</span>
                   </div>
-                </div>
-
-                <div className="flex justify-between items-end border-b border-gray-200 pb-4 group-hover:border-atelier-black transition-colors duration-300">
-                  <div>
-                    <h3 className="font-serif text-3xl text-atelier-black mb-1 group-hover:italic transition-all">{item.name}</h3>
-                    <p className="font-sans text-xs tracking-widest text-gray-500 uppercase">{item.series}</p>
-                  </div>
-                  <span className="font-mono text-xs text-gray-400">{item.year}</span>
                 </div>
               </motion.div>
             ))}

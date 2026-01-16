@@ -239,23 +239,15 @@ function AutoRotator({ enabled, children }: { enabled: boolean, children: React.
   return <group ref={group}>{children}</group>;
 }
 
-// --- COMPONENT: Model (with GLTF support) ---
-function Model({ url, config }: { url?: string | null, config: LabConfig }) {
-  const { scene } = useGLTF(url || ""); // We won't use this if url is null, but hook rules apply
-  
-  if (url) {
-    return <primitive object={scene} scale={2} />;
-  }
+// --- COMPONENT: Custom Model (GLTF) ---
+function CustomModel({ url }: { url: string }) {
+  const { scene } = useGLTF(url);
+  return <primitive object={scene} scale={2} />;
+}
 
-  // Fallback: High-quality Resin Sphere
+// --- COMPONENT: Resin Sphere (Fallback) ---
+function ResinSphere({ config }: { config: LabConfig }) {
   // Calculate resin properties based on config
-  const baseColor = config.skinTone;
-  // Mix in yellow based on resinAge (simple approximation)
-  // In a real shader we'd do this per-channel, here we rely on the material property if possible or just use the base color
-  // Since we can't easily mix colors in JS for the material prop without a library like 'three', we will use the base color 
-  // and rely on the physical properties to sell the effect. 
-  // Ideally: transmission color could be yellowed.
-
   const ior = config.resinType === "french" ? 1.54 : config.resinType === "vintage" ? 1.52 : 1.5;
   const clearcoat = config.resinType === "french" ? 1.0 : config.resinType === "vintage" ? 0.3 : 0.5;
 
@@ -355,6 +347,36 @@ export default function LabPage() {
     }
   };
 
+  // Helper to update config and trigger simulation feedback
+  const updateLabParams = (updates: Partial<LabConfig>) => {
+    setLabConfig(prev => ({ ...prev, ...updates }));
+    
+    if (!labConfig.isRendering) {
+      setSimulationStatus("SIMULATING");
+      
+      if (simulationTimeoutRef.current) {
+        clearTimeout(simulationTimeoutRef.current);
+      }
+      
+      simulationTimeoutRef.current = setTimeout(() => {
+        setSimulationStatus("READY");
+      }, 300);
+    }
+  };
+
+  // 4. Render Logic
+  const handleRender = () => {
+    setLabConfig(prev => ({ ...prev, isRendering: true }));
+    setRenderSuccess(false);
+    setDownloadUrl(null);
+    
+    // Simulate processing time, then capture
+    setTimeout(() => {
+      setCaptureTrigger(true); // Trigger internal capture
+      // Note: Capture handler will reset trigger and set success
+    }, 2000);
+  };
+
   // Keyboard Shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -377,23 +399,6 @@ export default function LabPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [labConfig]);
 
-  // Helper to update config and trigger simulation feedback
-  const updateLabParams = (updates: Partial<LabConfig>) => {
-    setLabConfig(prev => ({ ...prev, ...updates }));
-    
-    if (!labConfig.isRendering) {
-      setSimulationStatus("SIMULATING");
-      
-      if (simulationTimeoutRef.current) {
-        clearTimeout(simulationTimeoutRef.current);
-      }
-      
-      simulationTimeoutRef.current = setTimeout(() => {
-        setSimulationStatus("READY");
-      }, 300);
-    }
-  };
-
   // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
@@ -414,19 +419,6 @@ export default function LabPage() {
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
-  };
-
-  // 4. Render Logic
-  const handleRender = () => {
-    setLabConfig(prev => ({ ...prev, isRendering: true }));
-    setRenderSuccess(false);
-    setDownloadUrl(null);
-    
-    // Simulate processing time, then capture
-    setTimeout(() => {
-      setCaptureTrigger(true); // Trigger internal capture
-      // Note: Capture handler will reset trigger and set success
-    }, 2000);
   };
 
   const handleCaptureComplete = (dataUrl: string) => {
@@ -540,7 +532,11 @@ export default function LabPage() {
                 <group position={[0, -0.5, 0]}>
                   <AutoRotator enabled={labConfig.autoRotate}>
                     <Suspense fallback={<Loader />}>
-                      <Model url={customModel} config={labConfig} />
+                      {customModel ? (
+                        <CustomModel url={customModel} />
+                      ) : (
+                        <ResinSphere config={labConfig} />
+                      )}
                     </Suspense>
                   </AutoRotator>
                   <ContactShadows 
@@ -580,7 +576,7 @@ export default function LabPage() {
                 />
                 <Bloom luminanceThreshold={1} mipmapBlur intensity={0.5} />
                 <Vignette eskil={false} offset={0.1} darkness={0.5} />
-                {/* @ts-ignore */}
+                {/* @ts-expect-error: Noise component types are missing */}
                 <Noise opacity={labConfig.grain ? 0.15 : 0} />
               </EffectComposer>
             </Canvas>
@@ -739,7 +735,7 @@ export default function LabPage() {
                 {["1/3", "1/4", "1/6"].map((scale) => (
                   <button
                     key={scale}
-                    onClick={() => updateLabParams({ scale: scale as any })}
+                    onClick={() => updateLabParams({ scale: scale as LabConfig["scale"] })}
                     className={cn(
                       "py-3 border text-xs font-mono tracking-widest transition-all",
                       labConfig.scale === scale 
@@ -757,7 +753,7 @@ export default function LabPage() {
                 {["16:9", "4:3", "1:1"].map((ratio) => (
                   <button
                     key={ratio}
-                    onClick={() => updateLabParams({ aspectRatio: ratio as any })}
+                    onClick={() => updateLabParams({ aspectRatio: ratio as LabConfig["aspectRatio"] })}
                     className={cn(
                       "py-3 border text-xs font-mono tracking-widest transition-all",
                       labConfig.aspectRatio === ratio 
@@ -954,7 +950,7 @@ export default function LabPage() {
                    {["standard", "french", "environmental", "vintage"].map((type) => (
                      <button
                        key={type}
-                       onClick={() => updateLabParams({ resinType: type as any })}
+                       onClick={() => updateLabParams({ resinType: type as LabConfig["resinType"] })}
                        className={cn(
                          "py-3 border text-xs font-mono tracking-widest uppercase transition-all",
                          labConfig.resinType === type 
@@ -1063,7 +1059,7 @@ export default function LabPage() {
               <div className="p-4 bg-white/5 border border-white/5 rounded text-center">
                 <p className="text-gray-500 text-xs font-sans leading-relaxed">
                   Adjusting the base resin properties. <br/>
-                  Lower roughness creates a "wet" or polished look, while higher values simulate sanded resin.
+                  Lower roughness creates a &quot;wet&quot; or polished look, while higher values simulate sanded resin.
                 </p>
               </div>
             </motion.div>
@@ -1220,24 +1216,6 @@ export default function LabPage() {
 }
 
 // --- SUB COMPONENTS ---
-
-function SidebarIcon({ icon: Icon, active, onClick }: { icon: LucideIcon, active?: boolean, onClick?: () => void }) {
-  return (
-    <div 
-      onClick={onClick}
-      className={cn(
-        "w-10 h-10 flex items-center justify-center rounded-sm transition-all duration-500 cursor-pointer group relative",
-        active ? "text-valo-gold" : "text-gray-600 hover:text-gray-300"
-      )}
-    >
-      <div className={cn(
-        "absolute inset-0 bg-valo-gold/10 rounded-sm opacity-0 transition-opacity duration-500",
-        active && "opacity-100 shadow-[0_0_15px_rgba(198,156,109,0.2)]"
-      )}></div>
-      <Icon className="w-5 h-5 relative z-10" strokeWidth={1.5} />
-    </div>
-  );
-}
 
 function SectionHeader({ title, subtitle }: { title: string, subtitle?: string }) {
   return (

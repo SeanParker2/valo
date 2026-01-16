@@ -54,7 +54,7 @@ export default function InfoHover({ term, definition, variant = "dark" }: InfoHo
                   "font-serif text-sm leading-relaxed italic",
                   variant === "dark" ? "text-gray-200" : "text-gray-300"
                 )}>
-                  "{definition}"
+                  &quot;{definition}&quot;
                 </p>
               </div>
             </div>

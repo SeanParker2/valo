@@ -143,4 +143,17 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* --- MODERN ATELIER TYPOGRAPHY SYSTEM --- */
+  
+  /* Headings: Editorial & Compact */
+  h1, h2, .font-serif-heading {
+    @apply font-serif font-light tracking-tight;
+    line-height: 1.0; /* 0.9 - 1.1 range */
+  }
+
+  /* UI Text: Technical & Precise (Museum Label Style) */
+  nav, button, .ui-label, .font-sans-tech {
+    @apply font-sans text-xs tracking-widest uppercase;
+  }
 }

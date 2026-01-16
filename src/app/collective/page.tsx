@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Sidebar } from "@/components/organisms/Sidebar";
+import InfoHover from "@/components/molecules/InfoHover";
 import { Upload, Heart, Quote, ArrowRight, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
