@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALO | The Atelier (Remastered)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                    },
+                    colors: {
+                        'atelier-bg': '#F7F5F2', 
+                        'atelier-black': '#1a1918',
+                        'atelier-gold': '#A67C52',
+                    },
+                    fontSize: {
+                        '2xs': '0.65rem', // 自定义超小字号，用于装饰性文字
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F7F5F2;
+            color: #1a1918;
+            overflow-x: hidden; /* 防止横向滚动 */
+        }
+        /* 优化滚动条 */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #F7F5F2; }
+        ::-webkit-scrollbar-thumb { background: #d1cfcb; border-radius: 5px; }
+        
+        .parallax-img { transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .group:hover .parallax-img { transform: scale(1.03); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="fixed left-0 top-0 h-full w-32 border-r border-[#e5e0d8] flex flex-col items-center justify-between py-16 z-50 bg-[#F7F5F2]">
+        <div class="font-serif text-3xl font-bold tracking-widest -rotate-90 origin-center translate-y-4 text-atelier-black">VALO</div>
+        
+        <div class="flex flex-col space-y-16 items-center">
+            <div class="w-px h-16 bg-gray-400"></div>
+            <a href="#" class="text-sm font-sans font-medium tracking-[0.25em] uppercase -rotate-90 hover:text-atelier-gold transition-colors whitespace-nowrap text-gray-800">Shop</a>
+            <a href="#" class="text-sm font-sans font-medium tracking-[0.25em] uppercase -rotate-90 hover:text-atelier-gold transition-colors whitespace-nowrap text-gray-800">Stories</a>
+            <a href="#" class="text-sm font-sans font-medium tracking-[0.25em] uppercase -rotate-90 text-atelier-gold transition-colors whitespace-nowrap font-bold">Atelier</a>
+            <div class="w-px h-16 bg-gray-400"></div>
+        </div>
+
+        <div class="text-sm font-sans font-medium tracking-widest">EN</div>
+    </nav>
+
+    <main class="pl-32">
+
+        <section class="relative w-full h-screen flex border-b border-[#e5e0d8]">
+            <div class="w-1/2 h-full flex flex-col justify-center px-24 z-10 relative bg-[#F7F5F2]">
+                <span class="font-sans text-sm font-semibold tracking-[0.25em] text-atelier-gold mb-8 block flex items-center gap-4">
+                    <span class="w-8 h-px bg-atelier-gold"></span> EST. 2026 COLLECTION
+                </span>
+                
+                <h1 class="font-serif text-8xl xl:text-9xl leading-[0.9] text-atelier-black mb-10">
+                    The Soul <br> <span class="italic font-light ml-20 text-gray-600">in Resin</span>
+                </h1>
+                
+                <p class="font-sans font-normal text-lg leading-loose max-w-lg text-gray-700 mb-14">
+                    VALO 致力于探索人形艺术的边界。我们将精密工程与古典美学结合，为收藏家呈现拥有独立灵魂的 BJD 作品。
+                </p>
+                
+                <div class="flex items-center gap-8">
+                    <button class="bg-atelier-black text-white px-12 py-5 font-sans text-sm font-bold tracking-[0.15em] hover:bg-atelier-gold transition-colors shadow-lg hover:shadow-xl">
+                        EXPLORE SERIES
+                    </button>
+                    <a href="#" class="font-serif italic text-xl text-gray-600 hover:text-black hover:underline decoration-1 underline-offset-4 transition-colors">
+                        Watch the craft film <span class="text-lg align-middle ml-2">→</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="w-1/2 h-full absolute right-0 top-0 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover object-top opacity-95" alt="Hero Doll">
+            </div>
+        </section>
+
+        <section class="flex border-b border-[#e5e0d8]">
+            
+            <div class="w-5/12 sticky top-0 h-screen flex flex-col justify-center px-24 border-r border-[#e5e0d8] bg-[#F7F5F2] z-10">
+                <h2 class="font-serif text-6xl mb-12 text-atelier-black">Mastery <br> <span class="italic text-atelier-gold">of Details</span></h2>
+                <div class="space-y-10 mt-4">
+                    <div class="group cursor-pointer pl-4 border-l-2 border-transparent hover:border-atelier-gold transition-all">
+                        <h3 class="font-sans text-lg font-bold tracking-[0.15em] uppercase mb-2 text-gray-900 group-hover:text-atelier-gold transition-colors">01. Sculpt</h3>
+                        <p class="font-serif text-xl text-gray-500 italic group-hover:text-gray-800 transition-colors">3D scanned precision.</p>
+                    </div>
+                    <div class="group cursor-pointer pl-4 border-l-2 border-transparent hover:border-atelier-gold transition-all">
+                        <h3 class="font-sans text-lg font-bold tracking-[0.15em] uppercase mb-2 text-gray-900 group-hover:text-atelier-gold transition-colors">02. Mechanism</h3>
+                        <p class="font-serif text-xl text-gray-500 italic group-hover:text-gray-800 transition-colors">Double-jointed engineering.</p>
+                    </div>
+                    <div class="group cursor-pointer pl-4 border-l-2 border-transparent hover:border-atelier-gold transition-all">
+                        <h3 class="font-sans text-lg font-bold tracking-[0.15em] uppercase mb-2 text-gray-900 group-hover:text-atelier-gold transition-colors">03. Skin</h3>
+                        <p class="font-serif text-xl text-gray-500 italic group-hover:text-gray-800 transition-colors">Velvet touch finish.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-7/12 bg-white">
+                <div class="h-screen w-full relative flex items-center justify-center p-24 border-b border-gray-100 group overflow-hidden bg-gray-50">
+                    <img src="https://images.unsplash.com/photo-1515462277126-2dd0c162007a?q=80&w=1400&auto=format&fit=crop" class="w-full h-[85%] object-cover parallax-img shadow-2xl" alt="Sculpting">
+                    <div class="absolute bottom-16 right-16 bg-white p-10 max-w-sm shadow-2xl border border-gray-100">
+                        <span class="text-sm font-bold tracking-widest block mb-3 text-gray-900">THE SCULPT</span>
+                        <p class="font-serif text-lg italic text-gray-600 leading-relaxed">Captured in 8K resolution. Every pore and contour is deliberate.</p>
+                    </div>
+                </div>
+                <div class="h-screen w-full relative flex items-center justify-center p-24 border-b border-gray-100 group overflow-hidden bg-white">
+                    <img src="https://images.unsplash.com/photo-1535581652167-3d6b98c364c6?q=80&w=1400&auto=format&fit=crop" class="w-full h-[85%] object-cover parallax-img shadow-2xl grayscale hover:grayscale-0 transition-all duration-700" alt="Mechanics">
+                    <div class="absolute bottom-16 right-16 bg-white p-10 max-w-sm shadow-2xl border border-gray-100">
+                        <span class="text-sm font-bold tracking-widest block mb-3 text-gray-900">THE SKELETON</span>
+                        <p class="font-serif text-lg italic text-gray-600 leading-relaxed">See the internal tension strings and S-hooks in our 3D viewer.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-40 px-32 bg-[#1a1918] text-[#F7F5F2]">
+            <div class="flex justify-between items-end mb-20">
+                <div>
+                    <span class="text-atelier-gold font-sans text-sm font-bold tracking-[0.2em] block mb-4">FOR CREATORS</span>
+                    <h2 class="font-serif text-7xl">The Light Lab</h2>
+                </div>
+                <p class="max-w-lg font-sans font-normal text-lg text-gray-400 leading-loose">
+                    Different light creates different emotions. Use our virtual studio to test how VALO dolls react to various environments.
+                </p>
+            </div>
+
+            <div class="w-full aspect-[21/9] bg-[#222] border border-[#333] relative overflow-hidden flex shadow-2xl">
+                <div class="w-80 border-r border-[#333] p-10 flex flex-col space-y-10 bg-[#1e1e1e]">
+                    <div>
+                        <label class="text-xs font-bold tracking-widest text-gray-400 block mb-4">LIGHT SOURCE</label>
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-full bg-[#ffded6] cursor-pointer ring-2 ring-transparent hover:ring-white transition-all scale-100 hover:scale-110"></div> <div class="w-10 h-10 rounded-full bg-[#d6e4ff] cursor-pointer ring-2 ring-transparent hover:ring-white transition-all scale-100 hover:scale-110"></div> <div class="w-10 h-10 rounded-full bg-white cursor-pointer ring-2 ring-white scale-100 hover:scale-110 shadow-[0_0_15px_rgba(255,255,255,0.5)]"></div> </div>
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold tracking-widest text-gray-400 block mb-4">INTENSITY</label>
+                        <div class="w-full h-2 bg-[#444] rounded-full overflow-hidden cursor-pointer group">
+                            <div class="w-2/3 h-full bg-white group-hover:bg-atelier-gold transition-colors"></div>
+                        </div>
+                        <div class="flex justify-between mt-2 text-[10px] text-gray-500 font-mono">
+                            <span>0%</span>
+                            <span>65%</span>
+                            <span>100%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 relative">
+                    <img src="https://images.unsplash.com/photo-1629213014154-d88806295556?q=80&w=2000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-80" alt="Lab Preview">
+                    <div class="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-blue-500/5 mix-blend-overlay"></div>
+                    <div class="absolute bottom-6 right-6 text-xs font-mono text-gray-400 bg-black/50 px-4 py-2 backdrop-blur-sm border border-white/10">
+                        RENDER_ENGINE_V2.0 // REALTIME
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-24 px-32 border-t border-[#e5e0d8] flex justify-between items-start bg-[#F7F5F2]">
+            <div class="w-1/3">
+                <div class="font-serif text-5xl mb-8 text-atelier-black">VALO</div>
+                <p class="font-sans text-sm leading-loose text-gray-500 font-medium">
+                    Helsinki Design District<br>
+                    Punavuorenkatu 7, 00120<br>
+                    Finland
+                </p>
+            </div>
+            <div class="w-2/3 flex justify-end space-x-32 font-sans text-sm font-bold tracking-widest text-gray-800">
+                <div class="flex flex-col space-y-6">
+                    <span class="text-gray-400 font-normal text-xs mb-2 block">SHOP</span>
+                    <a href="#" class="hover:text-atelier-gold transition-colors">New Arrivals</a>
+                    <a href="#" class="hover:text-atelier-gold transition-colors">Pre-order</a>
+                    <a href="#" class="hover:text-atelier-gold transition-colors">Accessories</a>
+                </div>
+                <div class="flex flex-col space-y-6">
+                    <span class="text-gray-400 font-normal text-xs mb-2 block">SOCIAL</span>
+                    <a href="#" class="hover:text-atelier-gold transition-colors">Instagram</a>
+                    <a href="#" class="hover:text-atelier-gold transition-colors">XiaoHongShu</a>
+                    <a href="#" class="hover:text-atelier-gold transition-colors">Weibo</a>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+</body>
+</html>

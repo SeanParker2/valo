@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALO | NOA - The Archive (Remastered)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                    },
+                    colors: {
+                        'atelier-bg': '#F2F0EB', 
+                        'atelier-black': '#1C1B1A',
+                        'atelier-accent': '#706b66', 
+                        'divider': '#d6d3cd',
+                    },
+                    letterSpacing: {
+                        'widest-xl': '0.2em',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #F2F0EB; color: #1C1B1A; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        /* 增加文字选择的高级感 */
+        ::selection { background: #1C1B1A; color: #fff; }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <nav class="fixed left-0 top-0 h-full w-32 border-r border-divider flex flex-col items-center justify-between py-16 z-50 bg-[#F2F0EB]">
+        <a href="index.html" class="font-serif text-3xl font-bold tracking-widest -rotate-90 origin-center translate-y-4 opacity-100 hover:opacity-80 transition-opacity text-atelier-black">VALO</a>
+        
+        <div class="flex flex-col space-y-12 items-center">
+            <div class="w-px h-20 bg-divider"></div>
+            
+            <button class="group relative p-2">
+                <i data-lucide="search" class="w-6 h-6 text-atelier-accent group-hover:text-black transition-colors"></i>
+                <span class="absolute left-14 top-2 bg-atelier-black text-white text-xs font-bold px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap tracking-widest">SEARCH</span>
+            </button>
+            <button class="group relative p-2">
+                <i data-lucide="bookmark" class="w-6 h-6 text-atelier-accent group-hover:text-black transition-colors"></i>
+                <span class="absolute left-14 top-2 bg-atelier-black text-white text-xs font-bold px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap tracking-widest">SAVED</span>
+            </button>
+            <button class="group relative p-2">
+                <i data-lucide="share-2" class="w-6 h-6 text-atelier-accent group-hover:text-black transition-colors"></i>
+                <span class="absolute left-14 top-2 bg-atelier-black text-white text-xs font-bold px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap tracking-widest">SHARE</span>
+            </button>
+            
+            <div class="w-px h-20 bg-divider"></div>
+        </div>
+
+        <div class="text-xs font-sans font-bold text-atelier-accent tracking-widest">V.1.0</div>
+    </nav>
+
+    <main class="pl-32 flex h-screen overflow-hidden">
+
+        <div class="w-[55%] h-full overflow-y-auto bg-white border-r border-divider relative">
+            
+            <div class="sticky top-0 bg-white/95 backdrop-blur-md z-20 px-16 py-8 border-b border-divider flex justify-between items-center shadow-sm">
+                <div class="text-xs font-bold tracking-widest-xl uppercase text-atelier-accent flex items-center gap-3">
+                    <span class="text-black">Archive</span> / 2026 / Series 01
+                </div>
+                <button class="flex items-center gap-3 text-xs font-bold tracking-widest hover:text-atelier-accent transition-colors border border-black px-4 py-2 hover:bg-black hover:text-white">
+                    <i data-lucide="download" class="w-4 h-4"></i> 
+                    <span>DOWNLOAD ASSETS</span>
+                </button>
+            </div>
+
+            <div class="pb-32">
+                <div class="px-16 py-16">
+                    <img src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=1800&auto=format&fit=crop" class="w-full shadow-lg" alt="Portrait">
+                    <div class="mt-6 flex justify-between items-start border-l-2 border-black pl-4">
+                        <p class="font-serif italic text-gray-600 text-lg">Fig 1. The passive expression sculpted by hand.</p>
+                        <span class="font-mono text-xs text-gray-400">RAW_FILE_0023.CR3</span>
+                    </div>
+                </div>
+                
+                <div class="px-24 py-24 text-center bg-[#faf9f6]">
+                    <i data-lucide="quote" class="w-8 h-8 mx-auto mb-8 text-atelier-accent opacity-50"></i>
+                    <p class="font-serif text-3xl md:text-4xl leading-relaxed text-atelier-black font-medium">
+                        "She was not born of resin, <br>but of the long silence between two heartbeats."
+                    </p>
+                    <p class="mt-8 font-sans text-sm tracking-widest text-gray-500 uppercase">— The Sculptor's Log, Day 42</p>
+                </div>
+
+                <div class="px-16 py-16">
+                    <img src="https://images.unsplash.com/photo-1629213014154-d88806295556?q=80&w=1800&auto=format&fit=crop" class="w-full shadow-lg" alt="Close up">
+                     <div class="mt-6 flex justify-between items-start border-l-2 border-black pl-4">
+                        <p class="font-serif italic text-gray-600 text-lg">Fig 2. Texture detail under 5000K light source.</p>
+                        <span class="font-mono text-xs text-gray-400">MACRO_LENS_105MM</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-[45%] h-full bg-[#F2F0EB] relative flex flex-col">
+            
+            <div class="flex-1 overflow-y-auto p-16 flex flex-col">
+                
+                <div class="mb-16">
+                    <div class="flex items-start justify-between mb-2">
+                        <h1 class="font-serif text-8xl xl:text-9xl text-atelier-black leading-none -ml-1">Noa</h1>
+                        <span class="font-sans text-xs font-bold tracking-widest border-2 border-black px-3 py-1 rounded-full mt-4">PROTOTYPE</span>
+                    </div>
+                    <p class="font-serif text-3xl text-atelier-accent italic mt-4">The Silent Observer</p>
+                </div>
+
+                <div class="border-t-2 border-divider py-12 mb-12">
+                    <div class="grid grid-cols-2 gap-y-10 gap-x-8">
+                        <div>
+                            <span class="block text-xs font-bold tracking-widest uppercase text-gray-500 mb-2">Sculptor</span>
+                            <span class="font-serif text-2xl text-atelier-black">H. Valo</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs font-bold tracking-widest uppercase text-gray-500 mb-2">Release Date</span>
+                            <span class="font-serif text-2xl text-atelier-black">Feb 14, 2026</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs font-bold tracking-widest uppercase text-gray-500 mb-2">Resin Material</span>
+                            <span class="font-serif text-2xl text-atelier-black border-b border-dotted border-gray-400">Swiss V3 (Anti-UV)</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs font-bold tracking-widest uppercase text-gray-500 mb-2">Skin Tone</span>
+                            <div class="flex gap-3 mt-1">
+                                <div class="w-6 h-6 rounded-full bg-[#FFE4D8] ring-1 ring-gray-400"></div>
+                                <div class="w-6 h-6 rounded-full bg-[#F5D0C0] ring-1 ring-gray-400"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6 flex-1">
+                    <h3 class="font-sans text-xs font-bold tracking-widest uppercase text-gray-400 mb-6">Laboratory Access</h3>
+                    
+                    <div class="bg-white p-8 border border-divider group cursor-pointer hover:border-black hover:shadow-xl transition-all">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-3 bg-gray-100 rounded-full group-hover:bg-black group-hover:text-white transition-colors">
+                                <i data-lucide="palette" class="w-6 h-6"></i>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </div>
+                        <h4 class="font-serif text-2xl mb-2 text-atelier-black">Faceup Simulator</h4>
+                        <p class="text-sm text-gray-500 font-sans leading-relaxed font-medium">
+                            Upload your sketch or apply preset makeup styles to Noa's blank mold.
+                        </p>
+                    </div>
+
+                    <div class="bg-atelier-black text-[#F2F0EB] p-8 group cursor-pointer shadow-2xl relative overflow-hidden hover:scale-[1.02] transition-transform duration-500">
+                        <div class="relative z-10 flex justify-between items-start mb-6">
+                            <div class="p-3 bg-white/10 rounded-full group-hover:bg-white group-hover:text-black transition-colors">
+                                <i data-lucide="sun" class="w-6 h-6"></i>
+                            </div>
+                            <span class="text-[10px] font-bold border border-white/30 px-2 py-1 rounded bg-white/10 backdrop-blur-sm">POPULAR</span>
+                        </div>
+                        <h4 class="font-serif text-2xl mb-2 relative z-10">Enter Light Lab</h4>
+                        <p class="text-sm text-gray-400 font-sans leading-relaxed relative z-10 font-medium">
+                            Test dynamic lighting environments.
+                        </p>
+                        <div class="absolute right-[-20px] bottom-[-20px] w-48 h-48 bg-gradient-to-tl from-white/20 to-transparent rounded-full blur-2xl group-hover:scale-110 transition-transform duration-700"></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="p-8 border-t border-divider bg-[#ebe8e2]">
+                 <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                         <div class="flex -space-x-3">
+                            <img src="https://i.pravatar.cc/100?img=1" class="w-10 h-10 rounded-full border-2 border-[#ebe8e2]" alt="User">
+                            <img src="https://i.pravatar.cc/100?img=5" class="w-10 h-10 rounded-full border-2 border-[#ebe8e2]" alt="User">
+                            <div class="w-10 h-10 rounded-full bg-atelier-black text-white border-2 border-[#ebe8e2] flex items-center justify-center text-xs font-bold">+48</div>
+                        </div>
+                        <span class="text-xs font-bold tracking-widest text-gray-500 uppercase">Community Gallery</span>
+                    </div>
+                    <button class="text-xs font-bold underline underline-offset-4 hover:text-atelier-accent">VIEW ALL</button>
+                 </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
