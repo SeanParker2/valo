@@ -60,7 +60,7 @@ export function Sidebar({ className, variant = "default", children }: SidebarPro
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
             className={cn(
-              "md:hidden fixed inset-0 z-[60] flex flex-col p-8",
+              "md:hidden fixed inset-0 z-60 flex flex-col p-8",
               variant === "lab" ? "bg-[#0f0f0f] text-white" : "bg-atelier-bg text-atelier-black"
             )}
           >

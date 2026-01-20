@@ -107,7 +107,7 @@ export default function ArchiveClient() {
                 className="group cursor-pointer break-inside-avoid relative mb-8"
               >
                 <Link href={`/archive/${item.id}`} className="block">
-                  <div className="relative aspect-[3/4] w-full overflow-hidden bg-gray-100 rounded-sm">
+                  <div className="relative aspect-3/4 w-full overflow-hidden bg-gray-100 rounded-sm">
                     <Image 
                       src={item.image}  
                       alt={item.name}

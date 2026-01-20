@@ -547,7 +547,7 @@ export default function LabClient() {
                 </Environment>
               </Suspense>
               
-              <EffectComposer disableNormalPass>
+              <EffectComposer enableNormalPass={false}>
                 <DepthOfField 
                   focusDistance={labConfig.focusDistance} 
                   focalLength={labConfig.focalLength} 

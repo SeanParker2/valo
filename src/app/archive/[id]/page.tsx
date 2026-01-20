@@ -73,7 +73,7 @@ export default function ArchiveDetailPage({ params }: { params: Promise<{ id: st
               </p>
             </div>
 
-            <div className="w-full h-px bg-[#d6d3cd]"></div>
+            <div className="w-full h-px bg-divider"></div>
 
             {/* Narrative */}
             <div className="prose prose-stone">
