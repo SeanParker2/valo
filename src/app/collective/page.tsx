@@ -73,7 +73,7 @@ export default function CollectivePage() {
             <div className="break-inside-avoid group relative">
               <div className="relative overflow-hidden rounded-sm shadow-xl cursor-zoom-in">
                 <Image 
-                  src="https://images.unsplash.com/photo-1515462277126-2dd0c162007a?q=80&w=1200&auto=format&fit=crop" 
+                  src="/images/texture-01.svg" 
                   alt="Post"
                   width={1200}
                   height={1600}
@@ -103,7 +103,7 @@ export default function CollectivePage() {
               </div>
               <div className="mt-4 flex items-center justify-between px-2">
                 <div className="flex items-center gap-3">
-                  <Image src="https://i.pravatar.cc/150?img=9" width={32} height={32} className="w-8 h-8 rounded-full border border-gray-300" alt="Avatar" />
+                  <Image src="/images/avatar-01.svg" width={32} height={32} className="w-8 h-8 rounded-full border border-gray-300" alt="Avatar" />
                   <div>
                     <span className="block text-xs font-bold text-atelier-black">Luna.Stargazer</span>
                     <span className="block text-[10px] text-gray-500 tracking-wider">London, UK</span>
@@ -117,7 +117,7 @@ export default function CollectivePage() {
             <div className="break-inside-avoid group relative">
               <div className="relative overflow-hidden rounded-sm shadow-xl cursor-zoom-in">
                 <Image 
-                  src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?q=80&w=1200&auto=format&fit=crop" 
+                  src="/images/texture-02.svg" 
                   alt="Post"
                   width={1200}
                   height={1600}
@@ -131,7 +131,7 @@ export default function CollectivePage() {
               <div className="mt-4 px-2">
                  <p className="font-serif italic text-lg text-gray-800 leading-snug">&ldquo;The way the resin catches the morning light is just breathtaking.&rdquo;</p>
                  <div className="mt-3 flex items-center gap-2">
-                    <Image src="https://i.pravatar.cc/150?img=5" width={24} height={24} className="w-6 h-6 rounded-full border border-gray-300" alt="Avatar" />
+                    <Image src="/images/avatar-02.svg" width={24} height={24} className="w-6 h-6 rounded-full border border-gray-300" alt="Avatar" />
                     <span className="text-xs font-bold text-gray-500">By K.Wong</span>
                  </div>
               </div>
@@ -156,7 +156,7 @@ export default function CollectivePage() {
             <div className="break-inside-avoid group relative">
               <div className="relative overflow-hidden rounded-sm shadow-xl cursor-zoom-in">
                 <Image 
-                  src="https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=1000&auto=format&fit=crop" 
+                  src="/images/texture-03.svg" 
                   alt="Post"
                   width={1000}
                   height={1400}
@@ -182,7 +182,7 @@ export default function CollectivePage() {
               </div>
                <div className="mt-4 flex items-center justify-between px-2">
                 <div className="flex items-center gap-3">
-                  <Image src="https://i.pravatar.cc/150?img=32" width={32} height={32} className="w-8 h-8 rounded-full border border-gray-300" alt="Avatar" />
+                  <Image src="/images/avatar-01.svg" width={32} height={32} className="w-8 h-8 rounded-full border border-gray-300" alt="Avatar" />
                   <div>
                     <span className="block text-xs font-bold text-atelier-black">Sarah.Crafts</span>
                   </div>
@@ -195,7 +195,7 @@ export default function CollectivePage() {
             <div className="break-inside-avoid group relative">
               <div className="relative overflow-hidden rounded-sm shadow-xl cursor-zoom-in">
                 <Image 
-                  src="https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?q=80&w=1200&auto=format&fit=crop" 
+                  src="/images/texture-04.svg" 
                   alt="Post"
                   width={1200}
                   height={800}

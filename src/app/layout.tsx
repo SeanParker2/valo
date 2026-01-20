@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     siteName: "VALO",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/images/texture-01.svg",
         width: 1200,
         height: 630,
       },
