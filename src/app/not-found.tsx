@@ -1,23 +1,27 @@
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-[#0f0f0f] text-white font-sans selection:bg-valo-gold/30">
-      <div className="relative">
-        <h1 className="font-serif text-[12rem] leading-none opacity-5 select-none pointer-events-none">
-          404
+    <div className="flex min-h-screen bg-paper text-black items-center justify-center relative overflow-hidden">
+      {/* Background watermark */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+        <span className="font-serif text-[20vw] text-cream leading-none">404</span>
+      </div>
+
+      <div className="relative z-10 text-center max-w-lg px-8">
+        <span className="font-mono text-[10px] tracking-widest text-gold mb-6 block">
+          PAGE NOT FOUND
+        </span>
+        <h1 className="section-title text-6xl md:text-8xl mb-6">
+          Lost in <span className="italic text-gold">Resin</span>
         </h1>
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <p className="font-mono text-xs tracking-[0.3em] text-valo-gold mb-4">ERROR_Code: NOT_FOUND</p>
-          <h2 className="font-serif text-4xl mb-8">Lost in the Void</h2>
-          <Link 
-            href="/"
-            className="group flex items-center gap-2 px-6 py-3 border border-white/10 hover:bg-white/5 transition-all rounded-sm"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span className="text-xs font-bold tracking-widest uppercase">Return to Atelier</span>
-          </Link>
+        <p className="font-serif text-xl text-gray-500 leading-relaxed mb-12">
+          The page you seek may have been archived, or the URL was mistyped. Like a prototype that never made it to production — sometimes the best things are hard to find.
+        </p>
+        <div className="flex gap-4 justify-center flex-wrap">
+          <Link href="/" className="btn-primary">HOME</Link>
+          <Link href="/archive" className="btn-secondary">ARCHIVE</Link>
+          <Link href="/journal" className="btn-ghost">JOURNAL</Link>
         </div>
       </div>
     </div>

@@ -2,16 +2,21 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: "Montserrat", sans-serif;
   --font-serif: "Cormorant Garamond", serif;
   --font-mono: "JetBrains Mono", monospace;
-  
-  /* Custom Colors - Modern Atelier (Warm/Deep) */
+
+  /* === BRAND COLORS === */
+  --color-gold: #A67C52;
+  --color-gold-warm: #C69C6D;
+  --color-black: #1a1918;
+  --color-paper: #F7F5F2;
+  --color-cream: #F2F0EB;
+  --color-accent: #706b66;
+  --color-divider: #d6d3cd;
+
+  /* === LAB DARK THEME === */
   --color-lab-bg: #121210;
   --color-lab-viewport: #0E0E0C;
   --color-lab-sidebar: #161614;
@@ -19,16 +24,27 @@
   --color-lab-card: #222220;
   --color-lab-element: #262624;
   --color-lab-border: #333330;
-  --color-lab-text-muted: #555550;
-  --color-lab-input-bg: #111110;
-  --color-valo-gold: #C69C6D;
-  --color-atelier-bg: #F7F5F2;
-  --color-atelier-black: #1a1918;
-  --color-atelier-gold: #A67C52;
-  --color-atelier-accent: #706b66;
-  --color-divider: #d6d3cd;
+  --color-lab-muted: #555550;
+  --color-lab-input: #111110;
 
-  /* Shadcn Colors */
+  /* === SHADCN COMPAT === */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent-foreground: var(--accent);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -37,40 +53,17 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: #F7F5F2; /* Paper background */
-  --foreground: #1a1918; /* Atelier black */
+  --radius: 0.375rem;
+  --background: #F7F5F2;
+  --foreground: #1a1918;
   --card: #FFFFFF;
   --card-foreground: #1a1918;
   --popover: #FFFFFF;
@@ -82,16 +75,10 @@
   --muted: #F2F0EB;
   --muted-foreground: #706b66;
   --accent: #F2F0EB;
-  --accent-foreground: #1a1918;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #d6d3cd; /* Divider */
+  --border: #d6d3cd;
   --input: #d6d3cd;
-  --ring: #A67C52; /* Atelier Gold */
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --ring: #A67C52;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -102,58 +89,208 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-.dark {
-  --background: #0a0a0a; /* Lab bg */
-  --foreground: #e5e5e5;
-  --card: #141414; /* Lab panel */
-  --card-foreground: #e5e5e5;
-  --popover: #141414;
-  --popover-foreground: #e5e5e5;
-  --primary: #e5e5e5;
-  --primary-foreground: #0a0a0a;
-  --secondary: #2a2a2a; /* Lab border */
-  --secondary-foreground: #e5e5e5;
-  --muted: #2a2a2a;
-  --muted-foreground: #a3a3a3;
-  --accent: #2a2a2a;
-  --accent-foreground: #e5e5e5;
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: #2a2a2a;
-  --input: #2a2a2a;
-  --ring: #C69C6D; /* Valo Gold */
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
-
+/* === BASE RESET === */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-paper text-black antialiased;
   }
 
-  /* --- MODERN ATELIER TYPOGRAPHY SYSTEM --- */
-  
-  /* Headings: Editorial & Compact */
-  h1, h2, .font-serif-heading {
-    @apply font-serif font-light tracking-tight;
-    line-height: 1.0; /* 0.9 - 1.1 range */
+  /* Focus Visible */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-gold;
   }
 
-  /* UI Text: Technical & Precise (Museum Label Style) */
-  nav, button, .ui-label, .font-sans-tech {
-    @apply font-sans text-xs tracking-widest uppercase;
+  /* Skip Nav */
+  .skip-nav {
+    @apply absolute -top-full left-4 z-[10000] bg-black text-white px-4 py-2 text-xs font-bold tracking-widest;
   }
+  .skip-nav:focus {
+    @apply top-4;
+  }
+}
+
+/* === DESIGN SYSTEM COMPONENTS === */
+
+/* Brand Button - Primary */
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2
+    bg-black text-white
+    px-8 py-3.5
+    font-sans text-[11px] font-bold tracking-[0.2em] uppercase
+    transition-all duration-300
+    hover:bg-gold;
+}
+
+/* Brand Button - Secondary */
+.btn-secondary {
+  @apply inline-flex items-center justify-center gap-2
+    border border-black text-black
+    px-8 py-3.5
+    font-sans text-[11px] font-bold tracking-[0.2em] uppercase
+    transition-all duration-300
+    hover:bg-black hover:text-white;
+}
+
+/* Brand Button - Ghost */
+.btn-ghost {
+  @apply inline-flex items-center justify-center gap-2
+    border-b border-transparent text-gray-500
+    px-6 py-2.5
+    font-sans text-[11px] font-bold tracking-[0.2em] uppercase
+    transition-all duration-300
+    hover:text-black hover:border-black;
+}
+
+/* Brand Button - Gold */
+.btn-gold {
+  @apply inline-flex items-center justify-center gap-2
+    bg-gold text-white
+    px-8 py-3.5
+    font-sans text-[11px] font-bold tracking-[0.2em] uppercase
+    transition-all duration-300
+    hover:bg-black;
+}
+
+/* Brand Input */
+.input-brand {
+  @apply w-full bg-transparent
+    border-b border-divider
+    pb-3 font-serif text-lg
+    outline-none focus:border-gold
+    transition-colors
+    placeholder:text-gray-300;
+}
+
+/* Brand Card - Image */
+.card-image {
+  @apply relative overflow-hidden bg-cream;
+}
+
+/* Brand Card - Content */
+.card-content {
+  @apply bg-white border border-divider;
+}
+
+/* Section Label */
+.section-label {
+  @apply font-sans text-[10px] tracking-[0.3em] text-accent uppercase;
+}
+
+/* Section Title */
+.section-title {
+  @apply font-serif font-light tracking-tight leading-[0.95];
+}
+
+/* Stat Number */
+.stat-number {
+  @apply font-serif text-5xl md:text-6xl text-gold;
+}
+
+/* Stat Label */
+.stat-label {
+  @apply font-sans text-[10px] tracking-[0.3em] text-gray-400 uppercase;
+}
+
+/* Drop Cap - First letter styling */
+.drop-cap::first-letter {
+  @apply float-left font-serif text-6xl leading-[0.8] mr-3 mt-1 text-black;
+}
+
+/* Pull Quote */
+.pull-quote {
+  @apply border-l-2 border-gold pl-8 my-12;
+}
+.pull-quote p {
+  @apply font-serif text-2xl md:text-3xl italic text-gray-600 leading-relaxed;
+}
+.pull-quote cite {
+  @apply block mt-4 font-sans text-[10px] tracking-[0.3em] text-gray-400 uppercase not-italic;
+}
+
+/* Divider with label */
+.divider-label {
+  @apply flex items-center gap-4 my-12;
+}
+.divider-label::before,
+.divider-label::after {
+  content: "";
+  @apply flex-1 h-px bg-divider;
+}
+
+/* Image hover zoom */
+.img-zoom {
+  @apply overflow-hidden;
+}
+.img-zoom img {
+  @apply transition-transform duration-700;
+}
+.img-zoom:hover img {
+  @apply scale-105;
+}
+
+/* Skeleton loader */
+.skeleton {
+  @apply bg-gray-200 animate-pulse rounded;
+}
+
+/* Tag */
+.tag {
+  @apply px-2 py-1 bg-cream text-[10px] font-bold tracking-widest text-gray-600;
+}
+
+/* Price */
+.price {
+  @apply font-serif text-4xl text-black;
+}
+.price-currency {
+  @apply font-mono text-[10px] text-gray-400 tracking-widest;
+}
+.price-layaway {
+  @apply font-mono text-[10px] text-gold tracking-widest;
+}
+
+/* === ANIMATIONS === */
+@keyframes loading {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(150%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes kenburns {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.05) translate(-1%, -1%); }
+  100% { transform: scale(1) translate(0, 0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* === SCROLLBARS === */
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 2px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.18); }
+
+.dark-scrollbar::-webkit-scrollbar { width: 4px; }
+.dark-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.dark-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+.dark-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+
+/* === ACCESSIBILITY === */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background: rgba(166, 124, 82, 0.3);
 }

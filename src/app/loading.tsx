@@ -1,12 +1,13 @@
-export default function Loading() {
+export default function GlobalLoading() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-atelier-bg">
-      <div className="flex items-center gap-1">
-        <div className="w-1.5 h-1.5 bg-atelier-black animate-bounce [animation-delay:-0.3s]"></div>
-        <div className="w-1.5 h-1.5 bg-atelier-black animate-bounce [animation-delay:-0.15s]"></div>
-        <div className="w-1.5 h-1.5 bg-atelier-black animate-bounce"></div>
+    <div className="flex min-h-screen bg-paper text-black items-center justify-center">
+      <div className="text-center">
+        <div className="font-serif text-5xl tracking-widest animate-pulse mb-6 text-black">VALO</div>
+        <div className="w-48 h-px bg-divider mx-auto overflow-hidden rounded-full">
+          <div className="h-full bg-gold animate-[loading_1.5s_ease-in-out_infinite]" style={{ width: "40%" }} />
+        </div>
+        <p className="font-serif text-sm text-gray-400 mt-6">Loading atelier</p>
       </div>
-      <span className="mt-4 font-mono text-[10px] tracking-[0.3em] text-gray-400 uppercase">Loading Atelier</span>
     </div>
   );
 }

@@ -1,140 +1,234 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Sidebar, SidebarButton } from "@/components/organisms/Sidebar";
-import InfoHover from "@/components/molecules/InfoHover";
-import { Search, Filter, X } from "lucide-react";
-import { ARCHIVE_ITEMS } from "@/lib/data";
+import { Sidebar } from "@/components/organisms/Sidebar";
+import { TopBar } from "@/components/organisms/TopBar";
+import { Search, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { FavoriteButton } from "@/components/ui/FavoriteButton";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { useFavorites } from "@/hooks/useFavorites";
+import { BLUR_PLACEHOLDER } from "@/lib/utils/blur";
+import type { Doll } from "@/types";
 
 const FILTERS = ["All", "Series 01", "Series 02", "Collab", "Concept", "One-off"];
 
-export default function ArchiveClient() {
-  const [activeFilter, setActiveFilter] = useState("All");
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+interface ArchiveClientProps {
+  initialItems: Doll[];
+}
 
-  const filteredItems = activeFilter === "All" 
-    ? ARCHIVE_ITEMS 
-    : ARCHIVE_ITEMS.filter(item => item.series.includes(activeFilter) || item.type.includes(activeFilter));
+export default function ArchiveClient({ initialItems }: ArchiveClientProps) {
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [sortBy, setSortBy] = useState<"name" | "year" | "price">("name");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const { isFavorite, toggleFavorite } = useFavorites();
+
+  const filteredItems = useMemo(() => {
+    let items = initialItems;
+    if (activeFilter !== "All") {
+      items = items.filter((item) => item.series === activeFilter);
+    }
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      items = items.filter(
+        (item) =>
+          item.name.toLowerCase().includes(q) ||
+          item.series.toLowerCase().includes(q) ||
+          item.type.toLowerCase().includes(q)
+      );
+    }
+    // Sort
+    items = [...items].sort((a, b) => {
+      let cmp = 0;
+      if (sortBy === "name") cmp = a.name.localeCompare(b.name);
+      else if (sortBy === "year") cmp = a.year.localeCompare(b.year);
+      else if (sortBy === "price") cmp = a.pricing.basePrice - b.pricing.basePrice;
+      return sortOrder === "asc" ? cmp : -cmp;
+    });
+    return items;
+  }, [activeFilter, searchQuery, sortBy, sortOrder, initialItems]);
+
+  const filterCounts = useMemo(() => {
+    const counts: Record<string, number> = { All: initialItems.length };
+    for (const item of initialItems) {
+      counts[item.series] = (counts[item.series] || 0) + 1;
+    }
+    return counts;
+  }, [initialItems]);
 
   return (
-    <div className="flex min-h-screen bg-atelier-bg text-atelier-black">
-      <Sidebar variant="archive">
-        <div className="w-px h-20 bg-[#e5e0d8] mb-12"></div>
-        <SidebarButton 
-          icon={isSearchOpen ? X : Search} 
-          label={isSearchOpen ? "CLOSE" : "SEARCH"} 
-          onClick={() => setIsSearchOpen(!isSearchOpen)}
-          active={isSearchOpen}
-        />
-        <SidebarButton icon={Filter} label="FILTER" />
-        <div className="w-px h-20 bg-[#e5e0d8] mt-12"></div>
-      </Sidebar>
+    <div className="flex min-h-screen bg-paper text-black">
+      <TopBar />
+      <div className="hidden lg:block">
+        <Sidebar variant="archive" />
+      </div>
 
-      <main className="pl-28 md:pl-32 flex-1 w-full flex flex-col">
-        <header className="px-8 md:px-16 py-12 md:py-20 border-b border-[#e5e0d8] flex flex-col md:flex-row md:items-end justify-between gap-8 relative overflow-hidden">
-          <div className="relative z-10">
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="font-serif text-5xl md:text-7xl text-atelier-black mb-4"
-            >
-              The Archive
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="font-sans text-gray-600 tracking-wide max-w-md"
-            >
-              A curated registry of all VALO creations. From <InfoHover term="prototypes" definition="Experimental casts used to test articulation and resin flow." variant="light" /> to final releases.
-            </motion.p>
+      <main className="pt-14 lg:pl-32 w-full">
+        <header className="sticky top-14 z-40 bg-paper/95 backdrop-blur-md border-b border-divider px-8 md:px-16 py-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-0">
+          <div>
+            <h1 className="section-title text-5xl md:text-6xl lg:text-7xl text-black mb-4">The Archive</h1>
+            <p className="font-serif text-lg text-gray-500 max-w-lg">
+              Every sculpt tells a story. Browse our collection of artisan ball-jointed dolls, each cast in French resin and engineered for fluid posing.
+            </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 relative z-10">
-            {FILTERS.map((filter) => (
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
+            <div className="flex flex-wrap gap-2">
+              {FILTERS.map((filter) => (
+                <button
+                  key={filter}
+                  onClick={() => setActiveFilter(filter)}
+                  aria-pressed={activeFilter === filter}
+                  className={cn(
+                    "px-4 py-2 text-[11px] font-bold tracking-widest transition-all border-b",
+                    activeFilter === filter
+                      ? "border-black text-black"
+                      : "border-transparent text-gray-400 hover:text-black hover:border-gray-300"
+                  )}
+                >
+                  {filter.toUpperCase()}
+                  {filterCounts[filter] !== undefined && (
+                    <span className="ml-1 text-[10px] text-gray-400">({filterCounts[filter]})</span>
+                  )}
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={() => {
+                setIsSearchOpen(!isSearchOpen);
+                if (isSearchOpen) setSearchQuery("");
+              }}
+              className={cn(
+                "p-2 transition-colors",
+                isSearchOpen ? "bg-black text-white" : "hover:bg-cream"
+              )}
+              aria-label="Search"
+            >
+              <Search className="w-4 h-4" />
+            </button>
+
+            {/* Sort Controls */}
+            <div className="flex items-center gap-2">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as "name" | "year" | "price")}
+                className="bg-transparent text-[11px] font-bold tracking-widest border-b border-transparent text-gray-400 hover:text-black cursor-pointer outline-none"
+              >
+                <option value="name">NAME</option>
+                <option value="year">YEAR</option>
+                <option value="price">PRICE</option>
+              </select>
               <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                className={cn(
-                  "px-5 py-2 rounded-full text-[10px] font-sans-tech font-bold tracking-widest uppercase transition-all duration-300 border",
-                  activeFilter === filter 
-                    ? "bg-atelier-black text-atelier-bg border-atelier-black" 
-                    : "bg-transparent text-gray-500 border-gray-300 hover:border-atelier-black hover:text-atelier-black"
-                )}
+                onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
+                className="text-[11px] font-bold tracking-widest text-gray-400 hover:text-black transition-colors"
+                aria-label={`Sort ${sortOrder === "asc" ? "descending" : "ascending"}`}
               >
-                {filter}
+                {sortOrder === "asc" ? "↑" : "↓"}
               </button>
-            ))}
+            </div>
           </div>
-          
-          <AnimatePresence>
-            {isSearchOpen && (
-              <motion.div 
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="absolute inset-0 bg-white z-20 flex items-center px-8 md:px-16"
-              >
-                <Search className="w-8 h-8 text-gray-300 mr-4" />
-                <input 
-                  type="text" 
-                  placeholder="Search by ID, Name, or Series..." 
-                  className="w-full h-full bg-transparent text-3xl font-serif text-atelier-black outline-none placeholder:text-gray-200"
-                  autoFocus
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
         </header>
 
-        <motion.div 
-          layout
-          className="p-8 md:p-16 columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8 min-h-[50vh]"
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredItems.map((item) => (
-              <motion.div 
-                key={item.id} 
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.4 }}
-                className="group cursor-pointer break-inside-avoid relative mb-8"
-              >
-                <Link href={`/archive/${item.id}`} className="block">
-                  <div className="relative aspect-3/4 w-full overflow-hidden bg-gray-100 rounded-sm">
-                    <Image 
-                      src={item.image}  
-                      alt={item.name}
-                      fill
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
-                    
-                    <div className="absolute bottom-0 inset-x-0 p-6 bg-white/30 backdrop-blur-md border-t border-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out flex justify-between items-end">
-                       <div>
-                          <h3 className="font-serif text-2xl text-atelier-black mb-1">{item.name}</h3>
-                          <p className="font-sans-tech text-[10px] text-atelier-black/70">{item.series} • {item.year}</p>
-                       </div>
-                       <span className="font-mono text-xs text-atelier-black/50">{item.id}</span>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        <AnimatePresence>
+          {isSearchOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="overflow-hidden border-b border-divider"
+            >
+              <div className="px-8 md:px-16 py-6 flex items-center gap-4">
+                <Search className="w-4 h-4 text-gray-400 shrink-0" />
+                <input
+                  type="text"
+                  placeholder="Search dolls by name, series, or type..."
+                  aria-label="Search dolls"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="input-brand text-lg"
+                  autoFocus
+                />
+                <button onClick={() => { setIsSearchOpen(false); setSearchQuery(""); }} aria-label="Close search">
+                  <X className="w-4 h-4 text-gray-400 hover:text-black" />
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        <footer className="px-8 md:px-16 py-12 text-center border-t border-[#e5e0d8] mt-auto">
-          <span className="font-sans text-xs font-bold tracking-[0.2em] text-gray-400 uppercase">
-            {filteredItems.length} Records Found
-          </span>
-        </footer>
+        <div className="px-8 md:px-16 py-16">
+          <motion.div layout className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
+            <AnimatePresence mode="popLayout">
+              {filteredItems.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                >
+                  <Link href={`/archive/${item.id}`} className="break-inside-avoid group block" data-cursor="view">
+                    <div className="card-image">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        width={800}
+                        height={1000}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        placeholder="blur"
+                        blurDataURL={BLUR_PLACEHOLDER}
+                        className={cn(
+                          "w-full h-auto transition-transform duration-700 group-hover:scale-105",
+                          index % 3 === 1 && "md:mt-16"
+                        )}
+                        priority={index < 3}
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-500" />
+                      <div className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <FavoriteButton
+                          isFavorite={isFavorite(item.id)}
+                          onToggle={() => toggleFavorite(item.id)}
+                          size="sm"
+                        />
+                      </div>
+                      <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                        <span className="inline-block bg-white/90 backdrop-blur-sm text-black text-[10px] font-bold tracking-widest px-3 py-1.5 uppercase">
+                          {item.type}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="mt-5 px-1">
+                      <div className="flex items-center justify-between">
+                        <h3 className="font-serif text-2xl text-black group-hover:text-gold transition-colors duration-300">
+                          {item.name}
+                        </h3>
+                        <span className="font-mono text-[10px] tracking-widest text-gray-400">VALO-{item.id}</span>
+                      </div>
+                      <p className="font-sans text-[11px] text-gray-500 tracking-widest uppercase mt-1.5">
+                        {item.series} &bull; {item.year}
+                      </p>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+
+          {filteredItems.length === 0 && (
+            <EmptyState
+              type="search"
+              query={searchQuery}
+              onReset={() => { setActiveFilter("All"); setSearchQuery(""); }}
+            />
+          )}
+        </div>
       </main>
     </div>
   );
